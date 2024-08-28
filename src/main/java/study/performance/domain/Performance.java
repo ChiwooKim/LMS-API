@@ -54,4 +54,17 @@ public class Performance {
         this.price = price;
         this.thumbnail = thumbnail;
     }
+
+    public void update(String performanceName, String performanceNumber, String performanceLocation, String startDate,
+                       String endDate, String runtime, String age, String price, String thumbnail) {
+        this.performanceName = performanceName;
+        this.performanceNumber = performanceNumber;
+        this.performanceLocation = performanceLocation;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.runtime = runtime;
+        this.age = age;
+        this.price = price;
+        this.thumbnail = thumbnail;
+    }
 }
