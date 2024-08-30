@@ -3,8 +3,9 @@ package study.performance.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import study.performance.dto.request.PerformanceInformationUpdateDto;
 import study.performance.dto.request.PerformanceInformationRequestDto;
+import study.performance.dto.request.PerformanceInformationUpdateDto;
+import study.performance.dto.response.PerformanceInformationResponseDto;
 import study.performance.service.AdminService;
 
 @RequiredArgsConstructor
@@ -17,6 +18,11 @@ public class AdminController {
     @PostMapping("/")
     public void postPerformanceInformation(@RequestBody @Valid PerformanceInformationRequestDto requestDto) {
         adminService.save(requestDto);
+    }
+
+    @GetMapping("/{performanceId}")
+    public PerformanceInformationResponseDto getPerformanceInformation(@PathVariable Long performanceId) {
+        return adminService.get(performanceId);
     }
 
     @PatchMapping("/{performanceId}")

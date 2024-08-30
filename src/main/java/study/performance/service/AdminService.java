@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import study.performance.domain.Performance;
 import study.performance.dto.request.PerformanceInformationUpdateDto;
 import study.performance.dto.request.PerformanceInformationRequestDto;
+import study.performance.dto.response.PerformanceInformationResponseDto;
 import study.performance.repository.PerformanceRepository;
 
 @RequiredArgsConstructor
@@ -17,6 +18,23 @@ public class AdminService {
     @Transactional
     public void save(PerformanceInformationRequestDto requestDto) {
         performanceRepository.save(requestDto.toEntity());
+    }
+
+    public PerformanceInformationResponseDto get(Long performanceId) {
+        Performance performance = performanceRepository.findById(performanceId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 공연이 존재하지 않습니다. id=" + performanceId));
+
+        return PerformanceInformationResponseDto.builder()
+                .performanceName(performance.getPerformanceName())
+                .performanceNumber(performance.getPerformanceNumber())
+                .performanceLocation(performance.getPerformanceLocation())
+                .startDate(performance.getStartDate())
+                .endDate(performance.getEndDate())
+                .runtime(performance.getRuntime())
+                .age(performance.getAge())
+                .price(performance.getPrice())
+                .thumbnail(performance.getThumbnail())
+                .build();
     }
 
     @Transactional
