@@ -1,13 +1,13 @@
-package study.performance;
+package com.example.practice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PerformanceApplication {
+public class PracticeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PerformanceApplication.class, args);
+		SpringApplication.run(PracticeApplication.class, args);
 	}
 
 }
