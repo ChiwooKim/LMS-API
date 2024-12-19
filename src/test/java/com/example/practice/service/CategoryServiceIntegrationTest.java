@@ -1,7 +1,7 @@
 package com.example.practice.service;
 
 import com.example.practice.domain.Category;
-import com.example.practice.dto.CategorySaveReqDto;
+import com.example.practice.dto.CategoryCreateReqDto;
 import com.example.practice.dto.CategoryUpdateReqDto;
 import com.example.practice.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ class CategoryServiceIntegrationTest {
     @Test
     void testUpdateCategory() {
         // Given
-        CategorySaveReqDto categoryDto = CategorySaveReqDto.builder().name("Old Name").build();
+        CategoryCreateReqDto categoryDto = CategoryCreateReqDto.builder().name("Old Name").build();
         Category category = categoryRepository.save(categoryDto.toEntity());
         CategoryUpdateReqDto updateCategoryDto = CategoryUpdateReqDto.builder().name("Young Name").build();
 
@@ -46,7 +46,7 @@ class CategoryServiceIntegrationTest {
     @Test
     void testDeleteCategory() {
         // Given
-        CategorySaveReqDto categoryDto = CategorySaveReqDto.builder().name("Deleted category").build();
+        CategoryCreateReqDto categoryDto = CategoryCreateReqDto.builder().name("Deleted category").build();
         Category category = categoryRepository.save(categoryDto.toEntity());
         Long categoryId = category.getId();
 

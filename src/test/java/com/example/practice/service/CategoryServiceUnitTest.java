@@ -2,7 +2,7 @@ package com.example.practice.service;
 
 import com.example.practice.domain.Category;
 import com.example.practice.dto.CategoriesListResDto;
-import com.example.practice.dto.CategorySaveReqDto;
+import com.example.practice.dto.CategoryCreateReqDto;
 import com.example.practice.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,9 +44,9 @@ class CategoryServiceUnitTest {
     }
 
     @Test
-    void testSaveCategory() {
+    void testCreateCategory() {
         // Given
-        CategorySaveReqDto categoryDto = CategorySaveReqDto.builder().name("AI").build();
+        CategoryCreateReqDto categoryDto = CategoryCreateReqDto.builder().name("AI").build();
         Category mockCategory = Category.builder().name("AI").build();
         ReflectionTestUtils.setField(mockCategory, "id", 1L);
         // Mock 객체의 동작 정의
@@ -54,7 +54,7 @@ class CategoryServiceUnitTest {
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(mockCategory));
 
         // When
-        Long categoryId = categoryService.saveCategory(categoryDto);
+        Long categoryId = categoryService.createCategory(categoryDto);
         Category savedCategory = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Category is not found. id=" + categoryId));
 

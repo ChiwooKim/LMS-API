@@ -2,7 +2,7 @@ package com.example.practice.service;
 
 import com.example.practice.domain.Category;
 import com.example.practice.dto.CategoriesListResDto;
-import com.example.practice.dto.CategorySaveReqDto;
+import com.example.practice.dto.CategoryCreateReqDto;
 import com.example.practice.dto.CategoryUpdateReqDto;
 import com.example.practice.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public Long saveCategory(CategorySaveReqDto reqDto) {
+    public Long createCategory(CategoryCreateReqDto reqDto) {
         return categoryRepository.save(reqDto.toEntity()).getId();
     }
 

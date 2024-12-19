@@ -1,7 +1,7 @@
 package com.example.practice.controller;
 
 import com.example.practice.dto.CategoriesListResDto;
-import com.example.practice.dto.CategorySaveReqDto;
+import com.example.practice.dto.CategoryCreateReqDto;
 import com.example.practice.dto.CategoryUpdateReqDto;
 import com.example.practice.service.CategoryService;
 import jakarta.validation.Valid;
@@ -23,8 +23,8 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Long saveCategory(@RequestBody @Valid CategorySaveReqDto reqDto) {
-        return categoryService.saveCategory(reqDto);
+    public Long createCategory(@RequestBody @Valid CategoryCreateReqDto reqDto) {
+        return categoryService.createCategory(reqDto);
     }
 
     @PutMapping("/{id}")

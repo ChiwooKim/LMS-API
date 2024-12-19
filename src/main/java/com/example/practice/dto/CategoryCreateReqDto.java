@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CategorySaveReqDto {
+public class CategoryCreateReqDto {
 
     @NotBlank(message = "Please enter a category")
     private String name;
 
     @Builder
-    public CategorySaveReqDto(String name) {
+    public CategoryCreateReqDto(String name) {
         this.name = name;
     }
 
