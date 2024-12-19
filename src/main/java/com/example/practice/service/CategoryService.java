@@ -29,6 +29,7 @@ public class CategoryService {
         return categoryRepository.save(reqDto.toEntity()).getId();
     }
 
+    @Transactional
     public Long updateCategory(Long id, CategoryUpdateReqDto reqDto) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Category is not found. id=" + id));
