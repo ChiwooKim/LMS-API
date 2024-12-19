@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public class CategoriesListResDto {
 
-    private Long id;
-    private String name;
+    private final Long id;
+    private final String name;
 
     public CategoriesListResDto(Category entity) {
         this.id = entity.getId();
