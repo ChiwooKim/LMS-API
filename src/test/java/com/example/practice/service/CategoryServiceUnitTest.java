@@ -1,8 +1,8 @@
 package com.example.practice.service;
 
 import com.example.practice.domain.Category;
-import com.example.practice.dto.CategoriesListResDto;
-import com.example.practice.dto.CategoryCreateReqDto;
+import com.example.practice.dto.category.CategoriesListResDto;
+import com.example.practice.dto.category.CategoryCreateReqDto;
 import com.example.practice.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

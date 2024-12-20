@@ -1,8 +1,8 @@
 package com.example.practice.controller;
 
-import com.example.practice.dto.CategoriesListResDto;
-import com.example.practice.dto.CategoryCreateReqDto;
-import com.example.practice.dto.CategoryUpdateReqDto;
+import com.example.practice.dto.category.CategoriesListResDto;
+import com.example.practice.dto.category.CategoryCreateReqDto;
+import com.example.practice.dto.category.CategoryUpdateReqDto;
 import com.example.practice.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
 package com.example.practice.service;
 
 import com.example.practice.domain.Category;
-import com.example.practice.dto.CategoryCreateReqDto;
-import com.example.practice.dto.CategoryUpdateReqDto;
+import com.example.practice.dto.category.CategoryCreateReqDto;
+import com.example.practice.dto.category.CategoryUpdateReqDto;
 import com.example.practice.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

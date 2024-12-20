@@ -1,4 +1,4 @@
-package com.example.practice.dto;
+package com.example.practice.dto.category;
 
 import com.example.practice.domain.Category;
 import jakarta.validation.constraints.NotBlank;
