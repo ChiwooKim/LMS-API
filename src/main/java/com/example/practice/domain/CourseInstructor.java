@@ -2,6 +2,7 @@ package com.example.practice.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,11 +16,17 @@ public class CourseInstructor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
+
+    @Builder
+    public CourseInstructor(Course course, Instructor instructor) {
+        this.course = course;
+        this.instructor = instructor;
+    }
 }
