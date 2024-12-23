@@ -3,6 +3,7 @@ package com.example.practice.service;
 import com.example.practice.domain.Category;
 import com.example.practice.domain.Course;
 import com.example.practice.domain.CourseInstructor;
+import com.example.practice.domain.Instructor;
 import com.example.practice.dto.course.CourseCreateReqDto;
 import com.example.practice.dto.course.CourseResDto;
 import com.example.practice.dto.course.CourseUpdateReqDto;
@@ -47,13 +48,10 @@ public class CourseService {
         Long createdCourseId = courseRepository.save(course).getId();
 
         // Create a CourseInstructor Relationships
-        reqDto.getInstructors().forEach(instructor -> {
-            CourseInstructor courseInstructor = CourseInstructor.builder()
-                    .course(course)
-                    .instructor(instructorRepository.findByName(instructor)
-                            .orElseThrow(() -> new IllegalArgumentException("Instructor not found")))
-                    .build();
-            courseInstructorRepository.save(courseInstructor);
+        reqDto.getInstructors().forEach(instructorName -> {
+            Instructor instructor = instructorRepository.findByName(instructorName)
+                    .orElseThrow(() -> new IllegalArgumentException("Instructor not found"));
+            course.addInstructor(instructor);
         });
 
         return createdCourseId;
@@ -108,14 +106,17 @@ public class CourseService {
                 reqDto.getCourseUrl());
 
         // Update CourseInstructor Relationships
-        courseInstructorRepository.deleteAllByCourse(course);
-        reqDto.getInstructors().forEach(instructor -> {
-            CourseInstructor courseInstructor = CourseInstructor.builder()
-                    .course(course)
-                    .instructor(instructorRepository.findByName(instructor)
-                            .orElseThrow(() -> new IllegalArgumentException("Instructor not found")))
-                    .build();
-            courseInstructorRepository.save(courseInstructor);
+        // Remove old instructors
+        List<Instructor> currentInstructors = course.getInstructors().stream()
+                .map(CourseInstructor::getInstructor)
+                .toList();
+        currentInstructors.forEach(course::removeInstructor);
+
+        // Add new instructors
+        reqDto.getInstructors().forEach(instructorName -> {
+            Instructor instructor = instructorRepository.findByName(instructorName)
+                    .orElseThrow(() -> new IllegalArgumentException("Instructor not found"));
+            course.addInstructor(instructor);
         });
 
         return courseId;
@@ -123,9 +124,17 @@ public class CourseService {
 
     @Transactional
     public void deleteCourse(Long id) {
+        // Fetch the Course
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Course not found"));
-        courseInstructorRepository.deleteAllByCourse(course);
+
+        // Remove relationships with instructors
+        List<Instructor> instructors = course.getInstructors().stream()
+                .map(CourseInstructor::getInstructor)
+                .toList();
+        instructors.forEach(course::removeInstructor);
+
+        // Delete the course
         courseRepository.delete(course);
     }
 

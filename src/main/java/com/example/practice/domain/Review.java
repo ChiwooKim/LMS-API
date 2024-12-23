@@ -18,7 +18,7 @@ public class Review {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @Column(nullable = false)
