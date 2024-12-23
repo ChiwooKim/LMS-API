@@ -2,6 +2,7 @@ package com.example.practice.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,10 +18,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "course_id")
-    private Course course;
-
     @Column(nullable = false)
     private float rating;
 
@@ -29,4 +26,21 @@ public class Review {
 
     @Column(nullable = false)
     private LocalDateTime createdDate;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "course_id")
+    private Course course;
+
+    @Builder
+    public Review(float rating, String comment, LocalDateTime createdDate, Course course) {
+        this.rating = rating;
+        this.comment = comment;
+        this.createdDate = createdDate;
+        this.course = course;
+    }
+
+    public void updateReview(Float rating, String comment) {
+        this.rating = rating;
+        this.comment = comment;
+    }
 }
