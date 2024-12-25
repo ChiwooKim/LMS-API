@@ -36,7 +36,10 @@ public class ReviewService {
                 .createdDate(LocalDateTime.now())
                 .build();
 
-        return reviewRepository.save(review).getId();
+        reviewRepository.save(review);
+        updateCourseRating(course);
+
+        return review.getId();
     }
 
     @Transactional(readOnly = true)
@@ -64,6 +67,7 @@ public class ReviewService {
 
         // Update the review
         review.updateReview(reqDto.getRating(), reqDto.getComment());
+        updateCourseRating(review.getCourse());
 
         return reviewId;
     }
@@ -71,6 +75,20 @@ public class ReviewService {
     @Transactional
     public void deleteReview(Long reviewId) {
         // Delete the review
-        reviewRepository.deleteById(reviewId);
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("Review not found"));
+
+        Course course = review.getCourse();
+        reviewRepository.delete(review);
+        updateCourseRating(course);
+    }
+
+    private void updateCourseRating(Course course) {
+        List<Review> reviews = reviewRepository.findByCourse(course);
+        double averageRating = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0);
+        course.updateRating((float) averageRating);
     }
 }

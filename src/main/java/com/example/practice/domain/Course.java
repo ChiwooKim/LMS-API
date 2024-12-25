@@ -75,6 +75,10 @@ public class Course {
         this.courseUrl = courseUrl;
     }
 
+    public void updateRating(Float rating) {
+        this.rating = rating;
+    }
+
     // 연관관계 편의 메서드
     public void addInstructor(Instructor instructor) {
         CourseInstructor courseInstructor = CourseInstructor.builder()
