@@ -95,6 +95,9 @@ class ReviewServiceTest {
 
         // Then
         Review savedReview = reviewRepository.findById(reviewId).orElseThrow();
+        Course updatedCourse = courseRepository.findById(testCourse.getId()).orElseThrow();
+
+        assertThat(updatedCourse.getRating()).isEqualTo(4.0f);
         assertThat(savedReview.getRating()).isEqualTo(4.0f);
         assertThat(savedReview.getComment()).isEqualTo("이해하기 쉽게 설명해줘요!");
     }
@@ -159,6 +162,9 @@ class ReviewServiceTest {
 
         // Then
         Review updatedReview = reviewRepository.findById(review.getId()).orElseThrow();
+        Course updatedCourse = courseRepository.findById(testCourse.getId()).orElseThrow();
+
+        assertThat(updatedCourse.getRating()).isEqualTo(5.0f);
         assertThat(updatedReview.getRating()).isEqualTo(5.0f);
         assertThat(updatedReview.getComment()).isEqualTo("Excellent course");
     }
@@ -166,18 +172,29 @@ class ReviewServiceTest {
     @Test
     void deleteReview() {
         // Given
-        Review review = Review.builder()
+        Review review1 = Review.builder()
                 .course(testCourse)
                 .rating(4.0f)
                 .comment("Good course")
                 .createdDate(LocalDateTime.now())
                 .build();
-        reviewRepository.save(review);
+        reviewRepository.save(review1);
+
+        Review review2 = Review.builder()
+                .course(testCourse)
+                .rating(5.0f)
+                .comment("Excellent course")
+                .createdDate(LocalDateTime.now())
+                .build();
+        reviewRepository.save(review2);
 
         // When
-        reviewService.deleteReview(review.getId());
+        reviewService.deleteReview(review1.getId());
 
         // Then
-        assertThat(reviewRepository.findById(review.getId())).isEmpty();
+        Course updatedCourse = courseRepository.findById(testCourse.getId()).orElseThrow();
+
+        assertThat(updatedCourse.getRating()).isEqualTo(5.0f);
+        assertThat(reviewRepository.findById(review1.getId())).isEmpty();
     }
 }
