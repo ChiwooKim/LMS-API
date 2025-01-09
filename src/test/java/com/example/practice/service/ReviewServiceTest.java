@@ -1,17 +1,11 @@
 package com.example.practice.service;
 
-import com.example.practice.domain.Category;
-import com.example.practice.domain.Course;
-import com.example.practice.domain.Instructor;
-import com.example.practice.domain.Review;
+import com.example.practice.domain.*;
 import com.example.practice.dto.course.CourseCreateReqDto;
 import com.example.practice.dto.review.ReviewCreateReqDto;
 import com.example.practice.dto.review.ReviewResDto;
 import com.example.practice.dto.review.ReviewUpdateReqDto;
-import com.example.practice.repository.CategoryRepository;
-import com.example.practice.repository.CourseRepository;
-import com.example.practice.repository.InstructorRepository;
-import com.example.practice.repository.ReviewRepository;
+import com.example.practice.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +39,9 @@ class ReviewServiceTest {
     @Autowired
     private InstructorRepository instructorRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private Course testCourse;
 
     @BeforeEach
@@ -54,6 +51,7 @@ class ReviewServiceTest {
         courseRepository.deleteAll();
         categoryRepository.deleteAll();
         instructorRepository.deleteAll();
+        userRepository.deleteAll();
 
         // Generate test data
         Category testCategory = Category.builder().name("Programming").build();
@@ -89,9 +87,17 @@ class ReviewServiceTest {
                 .rating(4.0f)
                 .comment("이해하기 쉽게 설명해줘요!")
                 .build();
+        User user = User.builder()
+                .username("testUser")
+                .email("testmail@gmail.com")
+                .password("123456789")
+                .role("user")
+                .createdDate(LocalDateTime.now())
+                .build();
+        userRepository.save(user);
 
         // When
-        Long reviewId = reviewService.createReview(reqDto);
+        Long reviewId = reviewService.createReview(reqDto, user.getId());
 
         // Then
         Review savedReview = reviewRepository.findById(reviewId).orElseThrow();
