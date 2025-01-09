@@ -31,12 +31,17 @@ public class Review {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @Builder
-    public Review(float rating, String comment, LocalDateTime createdDate, Course course) {
+    public Review(float rating, String comment, LocalDateTime createdDate, Course course, User user) {
         this.rating = rating;
         this.comment = comment;
         this.createdDate = createdDate;
         this.course = course;
+        this.user = user;
     }
 
     public void updateReview(Float rating, String comment) {

@@ -1,11 +1,13 @@
 package com.example.practice.controller;
 
+import com.example.practice.config.jwt.UserPrincipal;
 import com.example.practice.dto.review.ReviewCreateReqDto;
 import com.example.practice.dto.review.ReviewResDto;
 import com.example.practice.dto.review.ReviewUpdateReqDto;
 import com.example.practice.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +20,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping
-    public Long createReview(@RequestBody @Valid ReviewCreateReqDto reqDto) {
-        return reviewService.createReview(reqDto);
+    public Long createReview(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody @Valid ReviewCreateReqDto reqDto) {
+        return reviewService.createReview(reqDto, userPrincipal.getUserId());
     }
 
     @GetMapping("/{courseId}")
